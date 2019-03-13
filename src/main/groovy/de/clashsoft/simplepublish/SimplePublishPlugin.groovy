@@ -8,15 +8,19 @@ class SimplePublishPlugin implements Plugin<Project> {
 	@Override
 	void apply(Project target) {
 		if (target.pluginManager.hasPlugin('java')) {
-			target.task('sourcesJar', type: Jar) {
-				from target.sourceSets.main.allSource
-				classifier = 'sources'
-			}
+			configureJava(target)
+		}
+	}
 
-			target.task('javadocJar', type: Jar, dependsOn: 'javadoc') {
-				from target.javadoc.destinationDir
-				classifier = 'javadoc'
-			}
+	private void configureJava(Project project) {
+		project.task('sourcesJar', type: Jar) {
+			from project.sourceSets.main.allSource
+			classifier = 'sources'
+		}
+
+		project.task('javadocJar', type: Jar, dependsOn: 'javadoc') {
+			from project.javadoc.destinationDir
+			classifier = 'javadoc'
 		}
 	}
 }
