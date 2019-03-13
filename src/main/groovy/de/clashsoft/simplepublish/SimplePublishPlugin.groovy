@@ -36,14 +36,15 @@ class SimplePublishPlugin implements Plugin<Project> {
 	}
 
 	private void configureJava(Project project) {
-		project.task('sourcesJar', type: Jar) {
-			from project.sourceSets.main.allSource
-			classifier = 'sources'
+		project.tasks.register('sourcesJar', Jar) {
+			it.from project.sourceSets.main.allSource
+			it.classifier = 'sources'
 		}
 
-		project.task('javadocJar', type: Jar, dependsOn: 'javadoc') {
-			from project.javadoc.destinationDir
-			classifier = 'javadoc'
+		project.tasks.register('javadocJar', Jar) {
+			it.dependsOn 'javadoc'
+			it.from project.javadoc.destinationDir
+			it.classifier = 'javadoc'
 		}
 	}
 
