@@ -8,19 +8,19 @@ import org.gradle.api.tasks.bundling.Jar
 class SimplePublishPlugin implements Plugin<Project> {
 	@Override
 	void apply(Project target) {
-		if (target.pluginManager.hasPlugin('java')) {
-			configureJava(target)
-		}
-
 		def publishInfo = target.extensions.create('publishInfo', PublishInfo)
 
 		target.afterEvaluate {
-			if (target.pluginManager.hasPlugin('maven-publish')) {
-				configureMaven(target, publishInfo)
-			}
+			if (target.pluginManager.hasPlugin('java')) {
+				configureJava(target)
 
-			if (target.pluginManager.hasPlugin('com.jfrog.bintray')) {
-				configureBintray(target, publishInfo)
+				if (target.pluginManager.hasPlugin('maven-publish')) {
+					configureMaven(target, publishInfo)
+				}
+
+				if (target.pluginManager.hasPlugin('com.jfrog.bintray')) {
+					configureBintray(target, publishInfo)
+				}
 			}
 		}
 	}
