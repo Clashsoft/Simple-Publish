@@ -1,6 +1,7 @@
 plugins {
 	id 'java-gradle-plugin'
 	id 'groovy'
+	id 'maven-publish'
 }
 
 gradlePlugin {
@@ -11,6 +12,10 @@ gradlePlugin {
 		}
 	}
 }
+
+group 'de.clashsoft'
+version '0.1.0'
+description 'A Gradle plugin that simplifies publishing to Maven and Bintray.'
 
 repositories {
 	mavenCentral()
