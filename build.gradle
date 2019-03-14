@@ -48,3 +48,6 @@ dependencies {
 		exclude group: 'org.codehaus.groovy'
 	}
 }
+
+apply from: "$rootDir/gradle/integration-test.gradle"
+apply from: "$rootDir/gradle/functional-test.gradle"
