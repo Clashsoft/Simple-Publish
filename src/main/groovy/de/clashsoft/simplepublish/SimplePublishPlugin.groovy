@@ -104,7 +104,9 @@ class SimplePublishPlugin implements Plugin<Project> {
 			pkg {
 				repo = 'maven'
 				name = project.name
-				// userOrg = ''
+				if (info.organization) {
+					userOrg = info.organization
+				}
 				desc = project.description
 				websiteUrl = info.websiteUrl
 				issueTrackerUrl = info.issueTrackerUrl

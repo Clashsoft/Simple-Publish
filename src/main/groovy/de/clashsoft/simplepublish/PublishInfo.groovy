@@ -4,6 +4,7 @@ import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
 
 class PublishInfo {
+	String organization
 	String[] labels
 
 	String websiteUrl
