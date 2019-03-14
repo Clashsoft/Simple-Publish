@@ -1,21 +1,40 @@
 plugins {
 	id 'java-gradle-plugin'
 	id 'groovy'
-	id 'maven-publish'
-}
-
-gradlePlugin {
-	plugins {
-		simplePlugin {
-			id = 'de.clashsoft.simple-publish'
-			implementationClass = 'de.clashsoft.simplepublish.SimplePublishPlugin'
-		}
-	}
+	id 'com.gradle.plugin-publish' version '0.10.1'
 }
 
 group 'de.clashsoft'
 version '0.1.0'
 description 'A Gradle plugin that simplifies publishing to Maven and Bintray.'
+
+pluginBundle {
+	website = 'https://github.com/Clashsoft/Simple-Publish'
+	vcsUrl = 'https://github.com/Clashsoft/Simple-Publish'
+	description = project.description
+	tags = [ 'publish', 'maven', 'bintray' ]
+
+	plugins {
+		simplePublishPlugin {
+			displayName = 'Simple Maven and Bintray Publishing'
+		}
+	}
+
+	mavenCoordinates {
+		groupId = project.group
+		artifactId = project.name
+		version = project.version
+	}
+}
+
+gradlePlugin {
+	plugins {
+		simplePublishPlugin {
+			id = 'de.clashsoft.simple-publish'
+			implementationClass = 'de.clashsoft.simplepublish.SimplePublishPlugin'
+		}
+	}
+}
 
 repositories {
 	mavenCentral()
