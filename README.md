@@ -23,7 +23,7 @@ plugins {
 // ...
 ```
 
-See [config.gradle](src/functionalTest/groovy/config.gradle) for a configuration example.
+See [config.gradle](src/functionalTest/resources/config.gradle) for a configuration example.
 
 To publish to Bintray, you need to configure your username and API key.
 If you have a custom GPG key in your profile, you also need to set the passphrase.

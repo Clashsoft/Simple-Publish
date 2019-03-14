@@ -23,7 +23,7 @@ class FunctionalTest extends Specification {
 			id 'com.jfrog.bintray' version '1.8.4'
 			id 'de.clashsoft.simple-publish'
 		}
-		""" << getClass().getResourceAsStream('config.gradle') << """
+		""" << getClass().getResourceAsStream('/config.gradle') << """
 		bintray.dryRun = true
 		"""
 	}
