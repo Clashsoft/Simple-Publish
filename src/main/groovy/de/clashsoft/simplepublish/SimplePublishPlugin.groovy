@@ -94,8 +94,8 @@ class SimplePublishPlugin implements Plugin<Project> {
 
 	private void configureBintray(Project project, PublishInfo info) {
 		project.bintray {
-			user = System.getenv('BINTRAY_USER')
-			key = System.getenv('BINTRAY_KEY')
+			user = project.findProperty('bintray.user') ?: System.getenv('BINTRAY_USER')
+			key = project.findProperty('bintray.key') ?: System.getenv('BINTRAY_KEY')
 			publications = [ project.name ]
 			// dryRun = true
 			// publish = true
@@ -126,7 +126,8 @@ class SimplePublishPlugin implements Plugin<Project> {
 
 					gpg {
 						sign = true
-						passphrase = System.getenv('BINTRAY_GPG_PASSPHRASE')
+						passphrase = project.findProperty('bintray.gpg.passphrase')
+								?: System.getenv('BINTRAY_GPG_PASSPHRASE')
 					}
 				}
 			}
