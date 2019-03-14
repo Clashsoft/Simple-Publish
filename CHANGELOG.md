@@ -7,3 +7,7 @@
 # Simple-Publish v0.2.0
 
 * The Bintray User and Key and GPG Passphrase can now be configured from project properties.
+
+# Simple-Publish v0.3.0 
+
++ Added support for setting a custom Bintray organization.

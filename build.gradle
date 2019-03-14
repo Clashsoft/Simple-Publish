@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'de.clashsoft'
-version '0.2.0'
+version '0.3.0'
 description 'A Gradle plugin that simplifies publishing to Maven and Bintray.'
 
 pluginBundle {

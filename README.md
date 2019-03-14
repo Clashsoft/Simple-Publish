@@ -16,7 +16,7 @@ plugins {
 	id 'java'
 	id 'maven-publish'
 	id 'com.jfrog.bintray' version '1.8.4'
-	id 'de.clashsoft.simple-publish' version '0.2.0'
+	id 'de.clashsoft.simple-publish' version '0.3.0'
 	// ...
 }
 
