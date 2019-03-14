@@ -1,0 +1,24 @@
+group 'com.example'
+version '1.2.3'
+description 'An example project.'
+
+publishInfo {
+	organization = 'suborg' // optional
+	websiteUrl = 'http://example.com'
+	issueTrackerUrl = 'http://example.com/issues'
+	vcsUrl = 'http://example.com/vcs'
+	githubRepo = 'com.example/example'
+	labels = [ 'example', 'test', 'project' ]
+
+	license {
+		shortName 'BSD 3-Clause'
+		longName 'BSD 3-Clause "New" or "Revised" License'
+		url 'https://opensource.org/licenses/BSD-3-Clause'
+	}
+
+	developer {
+		id 'jdoe'
+		name 'John Doe'
+		email 'jdoe@example.com'
+	}
+}

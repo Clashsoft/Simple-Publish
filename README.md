@@ -7,20 +7,9 @@ A Gradle plugin that simplifies publishing to Maven and Bintray.
 
 ## Usage
 
-`~/.gradle/gradle.properties`:
-```
-# ...
-bintray.user=jdoe
-bintray.key=a4Kn2HZn1Ub8B
-bintray.gpg.passphrase=p@55w0rD
-```
+The plugin is available on the [Gradle Plugin Portal](https://plugins.gradle.org/plugin/de.clashsoft.simple-publish)
+and can be installed via the `plugins` DSL in `build.gradle`:
 
-`settings.gradle`:
-```groovy
-rootProject.name = 'test'
-```
-
-`build.gradle`:
 ```groovy
 plugins {
 	// ...
@@ -28,33 +17,29 @@ plugins {
 	id 'maven-publish'
 	id 'com.jfrog.bintray' version '1.8.4'
 	id 'de.clashsoft.simple-publish' version '0.2.0'
-}
-
-// ...
-
-group 'com.example'
-version '1.2.3'
-description 'An example project.'
-
-publishInfo {
-    websiteUrl = 'http://example.com'
-    issueTrackerUrl = 'http://example.com/issues'
-    vcsUrl = 'http://example.com/vcs'
-    githubRepo = 'com.example/example'
-    labels = [ 'example', 'test', 'project' ]
-
-    license {
-        shortName 'BSD 3-Clause'
-        longName 'BSD 3-Clause "New" or "Revised" License'
-        url 'https://opensource.org/licenses/BSD-3-Clause'
-    }
-
-    developer {
-        id 'jdoe'
-        name 'John Doe'
-        email 'jdoe@example.com'
-    }
+	// ...
 }
 
 // ...
 ```
+
+See [config.gradle](src/functionalTest/groovy/config.gradle) for a configuration example.
+
+To publish to Bintray, you need to configure your username and API key.
+If you have a custom GPG key in your profile, you also need to set the passphrase.
+The properties should be placed in `~/.gradle/gradle.properties`:
+
+```
+# ...
+bintray.user=jdoe
+bintray.key=a4Kn2HZn1Ub8B
+bintray.gpg.passphrase=p@55w0rD
+```
+
+Don't forget to set the project name in `settings.gradle`:
+
+```groovy
+rootProject.name = 'test'
+```
+
+After configuring the Bintray repository, the plugin and the properties, you can publish with the `bintrayPublish` task.

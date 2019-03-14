@@ -7,20 +7,19 @@ import org.junit.Test
 class SimplePublishPluginTest {
 	@Test
 	void supportsPublishInfo() {
-		Project project = ProjectBuilder.builder().withName('abc123').build()
-		project.pluginManager.apply 'java'
-		project.pluginManager.apply 'maven-publish'
+		Project project = ProjectBuilder.builder().withName('test').build()
 		project.pluginManager.apply 'de.clashsoft.simple-publish'
 
 		project.group = 'com.example'
 		project.version = '1.2.3'
 		project.description = 'some project'
 		project.publishInfo {
-			websiteUrl = 'https://github.com/Clashsoft/abc123'
-			issueTrackerUrl = 'https://github.com/Clashsoft/abc123/issues'
-			vcsUrl = 'https://github.com/Clashsoft/abc123'
-			githubRepo = 'Clashsoft/abc123'
-			labels = [ 'source', 'generator', 'tree', 'ast' ]
+			organization = 'suborg'
+			websiteUrl = 'http://example.com'
+			issueTrackerUrl = 'http://example.com/issues'
+			vcsUrl = 'http://example.com/vcs'
+			githubRepo = 'com.example/example'
+			labels = [ 'example', 'test', 'project' ]
 
 			license {
 				shortName 'BSD 3-Clause'
@@ -29,9 +28,9 @@ class SimplePublishPluginTest {
 			}
 
 			developer {
-				id 'Clashsoft'
-				name 'Adrian Kunz'
-				email 'clashsoft@hotmail.com'
+				id 'jdoe'
+				name 'John Doe'
+				email 'jdoe@example.com'
 			}
 		}
 	}

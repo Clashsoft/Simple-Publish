@@ -18,36 +18,12 @@ class FunctionalTest extends Specification {
 
 		testProjectDir.newFile('build.gradle') << """
 		plugins {
-		    id 'java'
-		    id 'maven-publish'
-		    id 'com.jfrog.bintray' version '1.8.4'
-		    id 'de.clashsoft.simple-publish'
+			id 'java'
+			id 'maven-publish'
+			id 'com.jfrog.bintray' version '1.8.4'
+			id 'de.clashsoft.simple-publish'
 		}
-
-		group 'com.example'
-		version '1.2.3'
-		description 'An example project.'
-
-		publishInfo {
-		    websiteUrl = 'http://example.com'
-		    issueTrackerUrl = 'http://example.com/issues'
-		    vcsUrl = 'http://example.com/vcs'
-		    githubRepo = 'com.example/example'
-		    labels = [ 'example', 'test', 'project' ]
-
-		    license {
-		        shortName 'BSD 3-Clause'
-		        longName 'BSD 3-Clause "New" or "Revised" License'
-		        url 'https://opensource.org/licenses/BSD-3-Clause'
-		    }
-
-		    developer {
-		        id 'testus'
-		        name 'Testus Maximus'
-		        email 'testus@example.com'
-		    }
-		}
-		
+		""" << getClass().getResourceAsStream('config.gradle') << """
 		bintray.dryRun = true
 		"""
 	}
