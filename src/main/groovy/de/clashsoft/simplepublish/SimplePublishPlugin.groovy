@@ -49,44 +49,37 @@ class SimplePublishPlugin implements Plugin<Project> {
 	}
 
 	private void configureMaven(Project project, PublishInfo info) {
-		def pomConfig = {
-			licenses {
-				license {
-					name info.license.longName
-					url info.license.url
-				}
-			}
+		project.publishing.publications.create(project.name, MavenPublication) {
+			from project.components.java
+			artifact project.tasks.sourcesJar
+			artifact project.tasks.javadocJar
+			groupId project.group
+			artifactId project.name
+			version project.version
 
-			developers {
-				developer {
-					id info.developer.id
-					name info.developer.name
-					email info.developer.email
-				}
-			}
+			pom {
+				name = project.name
+				description = project.description
+				url = info.websiteUrl
 
-			scm {
-				url info.vcsUrl
-			}
-		}
-
-		project.publishing {
-			publications {
-				"$project.name"(MavenPublication) {
-					from project.components.java
-					artifact project.tasks.sourcesJar
-					artifact project.tasks.javadocJar
-					groupId project.group
-					artifactId project.name
-					version project.version
-
-					pom.withXml {
-						def root = asNode()
-						root.appendNode('description', project.description)
-						root.appendNode('name', project.name)
-						root.appendNode('url', info.websiteUrl)
-						root.children().last() + pomConfig
+				licenses {
+					license {
+						name = info.license.shortName
+						comments = info.license.longName
+						url = info.license.url
 					}
+				}
+
+				developers {
+					developer {
+						id = info.developer.id
+						name = info.developer.name
+						email = info.developer.email
+					}
+				}
+
+				scm {
+					url = info.vcsUrl
 				}
 			}
 		}
