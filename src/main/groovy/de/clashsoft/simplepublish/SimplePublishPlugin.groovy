@@ -2,25 +2,23 @@ package de.clashsoft.simplepublish
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.bundling.Jar
 
 class SimplePublishPlugin implements Plugin<Project> {
 	@Override
 	void apply(Project target) {
-		def publishInfo = target.extensions.create('publishInfo', PublishInfo)
+		target.plugins.apply('java')
+		target.plugins.apply('maven-publish')
+
+		def publishInfo = target.extensions.create('publishInfo', PublishInfo, target)
 
 		configureArtifactTasks(target)
 
 		target.afterEvaluate {
-			if (target.pluginManager.hasPlugin('java')) {
-				if (target.pluginManager.hasPlugin('maven-publish')) {
-					configureMaven(target, publishInfo)
-				}
+			configureMaven(target, publishInfo)
 
-				if (target.pluginManager.hasPlugin('com.jfrog.bintray')) {
-					configureBintray(target, publishInfo)
-				}
+			if (target.pluginManager.hasPlugin('com.jfrog.bintray')) {
+				configureBintray(target, publishInfo)
 			}
 		}
 	}
@@ -49,7 +47,7 @@ class SimplePublishPlugin implements Plugin<Project> {
 	}
 
 	private void configureMaven(Project project, PublishInfo info) {
-		project.publishing.publications.create(project.name, MavenPublication) {
+		project.publishing.publications."$project.name" {
 			from project.components.java
 			artifact project.tasks.sourcesJar
 			artifact project.tasks.javadocJar
@@ -61,22 +59,6 @@ class SimplePublishPlugin implements Plugin<Project> {
 				name = project.name
 				description = project.description
 				url = info.websiteUrl
-
-				licenses {
-					license {
-						name = info.license.shortName
-						comments = info.license.longName
-						url = info.license.url
-					}
-				}
-
-				developers {
-					developer {
-						id = info.developer.id
-						name = info.developer.name
-						email = info.developer.email
-					}
-				}
 
 				scm {
 					url = info.vcsUrl
@@ -104,7 +86,7 @@ class SimplePublishPlugin implements Plugin<Project> {
 				websiteUrl = info.websiteUrl
 				issueTrackerUrl = info.issueTrackerUrl
 				vcsUrl = info.vcsUrl
-				licenses = [ info.license.shortName ]
+				licenses = project.publishing.publications[project.name].pom.licenses*.name
 				labels = info.labels
 				publicDownloadNumbers = true
 				// attributes = []
