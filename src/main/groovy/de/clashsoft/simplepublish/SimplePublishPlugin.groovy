@@ -10,10 +10,10 @@ class SimplePublishPlugin implements Plugin<Project> {
 	void apply(Project target) {
 		def publishInfo = target.extensions.create('publishInfo', PublishInfo)
 
+		configureArtifactTasks(target)
+
 		target.afterEvaluate {
 			if (target.pluginManager.hasPlugin('java')) {
-				configureJava(target)
-
 				if (target.pluginManager.hasPlugin('maven-publish')) {
 					configureMaven(target, publishInfo)
 				}
@@ -35,7 +35,7 @@ class SimplePublishPlugin implements Plugin<Project> {
 		*/
 	}
 
-	private void configureJava(Project project) {
+	private void configureArtifactTasks(Project project) {
 		project.tasks.register('sourcesJar', Jar) {
 			it.from project.sourceSets.main.allSource
 			it.classifier = 'sources'
