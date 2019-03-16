@@ -69,41 +69,39 @@ class SimplePublishPlugin implements Plugin<Project> {
 
 	private void configureBintray(Project project, PublishInfo info) {
 		project.bintray {
-			user = project.findProperty('bintray.user') ?: System.getenv('BINTRAY_USER')
-			key = project.findProperty('bintray.key') ?: System.getenv('BINTRAY_KEY')
-			publications = [ project.name ]
+			user = user ?: project.findProperty('bintray.user') ?: System.getenv('BINTRAY_USER')
+			key = key ?: project.findProperty('bintray.key') ?: System.getenv('BINTRAY_KEY')
+			publications = publications ?: [ project.name ]
 			// dryRun = true
 			// publish = true
 			// override = true
 
 			pkg {
-				repo = 'maven'
-				name = project.name
-				if (info.organization) {
-					userOrg = info.organization
-				}
-				desc = project.description
-				websiteUrl = info.websiteUrl
-				issueTrackerUrl = info.issueTrackerUrl
-				vcsUrl = info.vcsUrl
-				licenses = project.publishing.publications[project.name].pom.licenses*.name
-				labels = info.labels
+				repo = repo ?: 'maven'
+				name = name ?: project.name
+				userOrg = userOrg ?: info.organization ?: null
+				desc = desc ?: project.description
+				websiteUrl = websiteUrl ?: info.websiteUrl
+				issueTrackerUrl = issueTrackerUrl ?: info.issueTrackerUrl
+				vcsUrl = vcsUrl ?: info.vcsUrl
+				licenses = licenses ?: project.publishing.publications[project.name].pom.licenses*.name
+				labels = labels ?: info.labels
 				publicDownloadNumbers = true
 				// attributes = []
 
-				githubRepo = info.githubRepo
-				githubReleaseNotesFile = 'CHANGELOG.md'
+				githubRepo = githubRepo ?: info.githubRepo
+				githubReleaseNotesFile = githubReleaseNotesFile ?: 'CHANGELOG.md'
 
 				version {
-					name = project.version
-					desc = "$project.name v$project.version"
-					released = new Date()
-					vcsTag = "v$project.version"
+					name = name ?: project.version
+					desc = desc ?: "$project.name v$project.version"
+					released = released ?: new Date()
+					vcsTag = vcsTag ?: "v$project.version"
 					// attributes = []
 
 					gpg {
 						sign = true
-						passphrase = project.findProperty('bintray.gpg.passphrase')
+						passphrase = passphrase ?: project.findProperty('bintray.gpg.passphrase')
 								?: System.getenv('BINTRAY_GPG_PASSPHRASE')
 					}
 				}
