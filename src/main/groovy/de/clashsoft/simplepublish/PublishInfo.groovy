@@ -28,6 +28,11 @@ class PublishInfo {
 		issueTrackerUrl = project.objects.property(String)
 		vcsUrl = project.objects.property(String)
 		githubRepo = project.objects.property(String)
+
+		// default values
+		websiteUrl.set(githubRepo.map { "https://github.com/$it" })
+		issueTrackerUrl.set(githubRepo.map { "https://github.com/$it/issues" })
+		vcsUrl.set(githubRepo.map { "https://github.com/$it" })
 	}
 
 	void license(Action<? super MavenPomLicense> action) {

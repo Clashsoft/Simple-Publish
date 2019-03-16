@@ -6,6 +6,7 @@ import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Test
 
 import static org.hamcrest.CoreMatchers.instanceOf
+import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertThat
 
 class SimplePublishPluginTest {
@@ -46,5 +47,19 @@ class SimplePublishPluginTest {
 
 		assertThat(project.javadocJar, instanceOf(Jar))
 		assertThat(project.sourcesJar, instanceOf(Jar))
+	}
+
+	@Test
+	void setsUrlsFromGitHub() {
+		Project project = ProjectBuilder.builder().withName('test').build()
+		project.pluginManager.apply 'de.clashsoft.simple-publish'
+
+		project.publishInfo {
+			githubRepo = "example/test"
+		}
+
+		assertEquals('https://github.com/example/test', project.publishInfo.websiteUrl.get())
+		assertEquals('https://github.com/example/test', project.publishInfo.vcsUrl.get())
+		assertEquals('https://github.com/example/test/issues', project.publishInfo.issueTrackerUrl.get())
 	}
 }

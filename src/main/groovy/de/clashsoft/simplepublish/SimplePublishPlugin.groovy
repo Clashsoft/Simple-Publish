@@ -44,16 +44,6 @@ class SimplePublishPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void complete(PublishInfo publishInfo) {
-		/*
-		if (publishInfo.githubRepo) {
-			publishInfo.issueTrackerUrl ?= "https://github.com/$publishInfo.githubRepo/issues/"
-			publishInfo.websiteUrl ?= "https://github.com/$publishInfo.githubRepo"
-			publishInfo.vcsUrl ?= "https://github.com/$publishInfo.githubRepo"
-		}
-		*/
-	}
-
 	private void configureArtifactTasks(Project project) {
 		project.tasks.register('sourcesJar', Jar) {
 			it.from project.sourceSets.main.allSource
