@@ -13,12 +13,30 @@ class SimplePublishPlugin implements Plugin<Project> {
 
 		def publishInfo = target.extensions.create('publishInfo', PublishInfo, target)
 
-		target.publishing.publications.create(target.name, MavenPublication)
-
 		configureArtifactTasks(target)
 
+		target.publishing.publications.create(target.name, MavenPublication) {
+			from target.components.java
+			artifact target.tasks.sourcesJar
+			artifact target.tasks.javadocJar
+
+			pom {
+				name = target.provider { target.name }
+				description = target.provider { target.description }
+				url = publishInfo.websiteUrl
+				scm {
+					url = publishInfo.vcsUrl
+				}
+			}
+		}
+
 		target.afterEvaluate {
-			configureMaven(target, publishInfo)
+			target.publishing.publications."$target.name" {
+				// neither Project nor Publication uses the Property API for these
+				groupId = groupId ?: target.group
+				artifactId = artifactId ?: target.name
+				version = version ?: target.version
+			}
 
 			if (target.pluginManager.hasPlugin('com.jfrog.bintray')) {
 				configureBintray(target, publishInfo)
@@ -46,27 +64,6 @@ class SimplePublishPlugin implements Plugin<Project> {
 			it.dependsOn 'javadoc'
 			it.from project.javadoc.destinationDir
 			it.classifier = 'javadoc'
-		}
-	}
-
-	private void configureMaven(Project project, PublishInfo info) {
-		project.publishing.publications."$project.name" {
-			from project.components.java
-			artifact project.tasks.sourcesJar
-			artifact project.tasks.javadocJar
-			groupId project.group
-			artifactId project.name
-			version project.version
-
-			pom {
-				name = project.name
-				description = project.description
-				url = info.websiteUrl
-
-				scm {
-					url = info.vcsUrl
-				}
-			}
 		}
 	}
 
