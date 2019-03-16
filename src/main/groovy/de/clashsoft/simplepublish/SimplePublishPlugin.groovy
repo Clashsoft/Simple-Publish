@@ -2,6 +2,7 @@ package de.clashsoft.simplepublish
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.bundling.Jar
 
 class SimplePublishPlugin implements Plugin<Project> {
@@ -11,6 +12,8 @@ class SimplePublishPlugin implements Plugin<Project> {
 		target.plugins.apply('maven-publish')
 
 		def publishInfo = target.extensions.create('publishInfo', PublishInfo, target)
+
+		target.publishing.publications.create(target.name, MavenPublication)
 
 		configureArtifactTasks(target)
 

@@ -26,15 +26,14 @@ class SimplePublishPluginTest {
 			labels = [ 'example', 'test', 'project' ]
 
 			license {
-				shortName 'BSD 3-Clause'
-				longName 'BSD 3-Clause "New" or "Revised" License'
-				url 'https://opensource.org/licenses/BSD-3-Clause'
+				name = 'BSD 3-Clause'
+				url = 'https://opensource.org/licenses/BSD-3-Clause'
 			}
 
 			developer {
-				id 'jdoe'
-				name 'John Doe'
-				email 'jdoe@example.com'
+				id = 'jdoe'
+				name = 'John Doe'
+				email = 'jdoe@example.com'
 			}
 		}
 	}

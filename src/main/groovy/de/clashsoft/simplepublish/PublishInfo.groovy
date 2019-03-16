@@ -1,9 +1,13 @@
 package de.clashsoft.simplepublish
 
 import org.gradle.api.Action
-import org.gradle.api.model.ObjectFactory
+import org.gradle.api.Project
+import org.gradle.api.publish.maven.MavenPomDeveloper
+import org.gradle.api.publish.maven.MavenPomLicense
 
 class PublishInfo {
+	private final Project project
+
 	String organization
 	String[] labels
 
@@ -12,32 +16,19 @@ class PublishInfo {
 	String vcsUrl
 	String githubRepo
 
-	License license
-	Developer developer
-
-	@javax.inject.Inject
-	PublishInfo(ObjectFactory objectFactory) {
-		license = objectFactory.newInstance(License)
-		developer = objectFactory.newInstance(Developer)
+	PublishInfo(Project project) {
+		this.project = project
 	}
 
-	void license(Action<? super License> action) {
-		action.execute(license)
+	void license(Action<? super MavenPomLicense> action) {
+		project.publishing.publications[project.name].pom.licenses {
+			license(action)
+		}
 	}
 
-	void developer(Action<? super Developer> action) {
-		action.execute(developer)
+	void developer(Action<? super MavenPomDeveloper> action) {
+		project.publishing.publications[project.name].pom.developers {
+			developer(action)
+		}
 	}
-}
-
-class License {
-	String shortName
-	String longName
-	String url
-}
-
-class Developer {
-	String id
-	String name
-	String email
 }
