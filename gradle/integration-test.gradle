@@ -10,12 +10,12 @@ sourceSets {
 	}
 }
 
-task integrationTest(type: Test) {
+tasks.register('integrationTest', Test) {
 	description = 'Runs the integration tests.'
 	group = 'verification'
 	testClassesDirs = sourceSets.integrationTest.output.classesDirs
 	classpath = sourceSets.integrationTest.runtimeClasspath
-	mustRunAfter test
+	mustRunAfter 'test'
 }
 
-check.dependsOn integrationTest
+check.dependsOn 'integrationTest'
