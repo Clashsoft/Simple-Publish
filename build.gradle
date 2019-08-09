@@ -38,9 +38,13 @@ gradlePlugin {
 
 repositories {
 	jcenter()
+	gradlePluginPortal()
 }
 
 dependencies {
+	// https://mvnrepository.com/artifact/com.jfrog.bintray/com.jfrog.bintray.gradle.plugin
+	compile group: 'com.jfrog.bintray', name: 'com.jfrog.bintray.gradle.plugin', version: '1.8.4'
+
 	// https://mvnrepository.com/artifact/junit/junit
 	testCompile group: 'junit', name: 'junit', version: '4.12'
 
