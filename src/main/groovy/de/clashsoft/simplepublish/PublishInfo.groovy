@@ -1,5 +1,6 @@
 package de.clashsoft.simplepublish
 
+import groovy.transform.CompileStatic
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.provider.ListProperty
@@ -7,6 +8,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.publish.maven.MavenPomDeveloper
 import org.gradle.api.publish.maven.MavenPomLicense
 
+@CompileStatic
 class PublishInfo {
 	private final Project project
 
@@ -30,20 +32,20 @@ class PublishInfo {
 		githubRepo = project.objects.property(String)
 
 		// default values
-		websiteUrl.set(githubRepo.map { "https://github.com/$it" })
-		issueTrackerUrl.set(githubRepo.map { "https://github.com/$it/issues" })
-		vcsUrl.set(githubRepo.map { "https://github.com/$it" })
+		websiteUrl.set(githubRepo.map { 'https://github.com/' + it })
+		issueTrackerUrl.set(githubRepo.map { 'https://github.com/' + it + '/issues' })
+		vcsUrl.set(githubRepo.map { 'https://github.com/' + it })
 	}
 
 	void license(Action<? super MavenPomLicense> action) {
-		project.publishing.publications[project.name].pom.licenses {
-			license(action)
+		SimplePublishPlugin.getDefaultPublication(project).pom.licenses {
+			it.license(action)
 		}
 	}
 
 	void developer(Action<? super MavenPomDeveloper> action) {
-		project.publishing.publications[project.name].pom.developers {
-			developer(action)
+		SimplePublishPlugin.getDefaultPublication(project).pom.developers {
+			it.developer(action)
 		}
 	}
 }
