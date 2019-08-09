@@ -25,16 +25,11 @@ class SimplePublishPlugin implements Plugin<Project> {
 
 		final PublishInfo publishInfo = project.extensions.create('publishInfo', PublishInfo, project)
 
-		final PublishingExtension publishing = project.extensions.getByType(PublishingExtension)
-
-		publishing.publications.create(project.name, MavenPublication) { MavenPublication pub ->
-			configureMaven(project, publishInfo, pub)
-		}
+		final MavenPublication publication = getPublishing(project).publications.create(project.name, MavenPublication)
+		configureMaven(project, publishInfo, publication)
 
 		project.afterEvaluate {
-			publishing.publications.getByName(project.name) { MavenPublication pub ->
-				configureMavenAfter(project, pub)
-			}
+			configureMavenAfter(project, publication)
 
 			if (project.pluginManager.hasPlugin('com.jfrog.bintray')) {
 				project.extensions.configure(BintrayExtension) { BintrayExtension bt ->
@@ -83,11 +78,7 @@ class SimplePublishPlugin implements Plugin<Project> {
 		pub.version = pub.version ?: project.version
 	}
 
-
 	private static void configureBintrayAfter(BintrayExtension bt, Project project, PublishInfo info) {
-		final PublishingExtension publishing = project.extensions.getByType(PublishingExtension)
-		final DefaultMavenPublication publication = publishing.publications[project.name] as DefaultMavenPublication
-
 		bt.user = bt.user ?: project.findProperty('bintray.user') ?: System.getenv('BINTRAY_USER')
 		bt.key = bt.key ?: project.findProperty('bintray.key') ?: System.getenv('BINTRAY_KEY')
 		bt.publications = bt.publications ?: [ project.name ] as String[]
@@ -103,7 +94,7 @@ class SimplePublishPlugin implements Plugin<Project> {
 		pkg.websiteUrl = pkg.websiteUrl ?: info.websiteUrl.get()
 		pkg.issueTrackerUrl = pkg.issueTrackerUrl ?: info.issueTrackerUrl.get()
 		pkg.vcsUrl = pkg.vcsUrl ?: info.vcsUrl.get()
-		pkg.licenses = pkg.licenses ?: publication.pom.licenses*.name as String[]
+		pkg.licenses = pkg.licenses ?: getDefaultPublication(project).pom.licenses*.name as String[]
 		pkg.labels = pkg.labels ?: info.labels.get() as String[]
 		pkg.publicDownloadNumbers = true
 		// pkg.attributes = []
@@ -123,5 +114,15 @@ class SimplePublishPlugin implements Plugin<Project> {
 		gpg.sign = true
 		gpg.passphrase = gpg.passphrase ?: project.findProperty('bintray.gpg.passphrase')
 				?: System.getenv('BINTRAY_GPG_PASSPHRASE')
+	}
+
+	// --------------- Helper Methods ---------------
+
+	protected static PublishingExtension getPublishing(Project project) {
+		project.extensions.getByType(PublishingExtension)
+	}
+
+	protected static DefaultMavenPublication getDefaultPublication(Project project) {
+		getPublishing(project).publications[project.name] as DefaultMavenPublication
 	}
 }
