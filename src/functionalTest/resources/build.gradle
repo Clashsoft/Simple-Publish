@@ -1,0 +1,10 @@
+plugins {
+	id 'java'
+	id 'maven-publish'
+	id 'com.jfrog.bintray' version '1.8.4'
+	id 'de.clashsoft.simple-publish'
+}
+
+apply from: 'config.gradle'
+
+bintray.dryRun = true
