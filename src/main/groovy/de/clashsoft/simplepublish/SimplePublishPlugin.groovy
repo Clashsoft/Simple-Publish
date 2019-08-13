@@ -89,17 +89,17 @@ class SimplePublishPlugin implements Plugin<Project> {
 		final BintrayExtension.PackageConfig pkg = bt.pkg
 		pkg.repo = pkg.repo ?: 'maven'
 		pkg.name = pkg.name ?: project.name
-		pkg.userOrg = pkg.userOrg ?: info.organization.get() ?: null
+		pkg.userOrg = pkg.userOrg ?: info.organization.getOrNull()
 		pkg.desc = pkg.desc ?: project.description
-		pkg.websiteUrl = pkg.websiteUrl ?: info.websiteUrl.get()
-		pkg.issueTrackerUrl = pkg.issueTrackerUrl ?: info.issueTrackerUrl.get()
-		pkg.vcsUrl = pkg.vcsUrl ?: info.vcsUrl.get()
+		pkg.websiteUrl = pkg.websiteUrl ?: info.websiteUrl.getOrNull()
+		pkg.issueTrackerUrl = pkg.issueTrackerUrl ?: info.issueTrackerUrl.getOrNull()
+		pkg.vcsUrl = pkg.vcsUrl ?: info.vcsUrl.getOrNull()
 		pkg.licenses = pkg.licenses ?: getDefaultPublication(project).pom.licenses*.name as String[]
-		pkg.labels = pkg.labels ?: info.labels.get() as String[]
+		pkg.labels = pkg.labels ?: info.labels.getOrNull() as String[]
 		pkg.publicDownloadNumbers = true
 		// pkg.attributes = []
 
-		pkg.githubRepo = pkg.githubRepo ?: info.githubRepo.get()
+		pkg.githubRepo = pkg.githubRepo ?: info.githubRepo.getOrNull()
 		pkg.githubReleaseNotesFile = pkg.githubReleaseNotesFile ?: 'CHANGELOG.md'
 
 		final BintrayExtension.VersionConfig ver = pkg.version
