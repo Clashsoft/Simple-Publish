@@ -22,3 +22,7 @@
 * The `PublishInfo` class now uses Gradle Properties.
 * The `java` and `maven-publish` plugins are now automatically applied.
 * The `vcsUrl`, `websiteUrl` and `issueTrackerUrl` properties can now be inferred from the `githubRepo`.
+
+# Simple-Publish v0.5.0
+
+* Fixed some bintray properties being configured incorrectly. #1
