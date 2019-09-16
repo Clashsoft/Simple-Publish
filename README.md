@@ -36,10 +36,19 @@ bintray.key=a4Kn2HZn1Ub8B
 bintray.gpg.passphrase=p@55w0rD
 ```
 
+Alternatively, the plugin looks can read these from environment variables:
+
+```
+BINTRAY_USER=jdoe
+BINTRAY_KEY=a4Kn2HZn1Ub8B
+BINTRAY_GPG_PASSPHRASE=p@55w0rD
+```
+
 Don't forget to set the project name in `settings.gradle`:
 
 ```groovy
 rootProject.name = 'test'
 ```
 
-After configuring the Bintray repository, the plugin and the properties, you can publish with the `bintrayPublish` task.
+After configuring the Bintray repository, the plugin and the properties, you can upload with the `bintrayUpload` task.
+Don't forget to publish your uploaded artifacts on the Bintray website!
