@@ -114,6 +114,10 @@ class SimplePublishPlugin implements Plugin<Project> {
 		gpg.sign = true
 		gpg.passphrase = gpg.passphrase ?: project.findProperty('bintray.gpg.passphrase')
 				?: System.getenv('BINTRAY_GPG_PASSPHRASE')
+
+		final BintrayExtension.MavenCentralSyncConfig mcs = ver.mavenCentralSync
+		mcs.user = mcs.user ?: project.findProperty('oss.user') ?: System.getenv('OSS_USER')
+		mcs.password = mcs.password ?: project.findProperty('oss.password') ?: System.getenv('OSS_PASSWORD')
 	}
 
 	// --------------- Helper Methods ---------------
