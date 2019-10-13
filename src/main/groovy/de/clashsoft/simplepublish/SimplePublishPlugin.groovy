@@ -94,7 +94,9 @@ class SimplePublishPlugin implements Plugin<Project> {
 		pkg.websiteUrl = pkg.websiteUrl ?: info.websiteUrl.getOrNull()
 		pkg.issueTrackerUrl = pkg.issueTrackerUrl ?: info.issueTrackerUrl.getOrNull()
 		pkg.vcsUrl = pkg.vcsUrl ?: info.vcsUrl.getOrNull()
-		pkg.licenses = pkg.licenses ?: getDefaultPublication(project).pom.licenses*.name as String[]
+		pkg.licenses = pkg.licenses ?: getDefaultPublication(project).pom.licenses.findResults {
+			it.name.getOrNull()
+		} as String[]
 		pkg.labels = pkg.labels ?: info.labels.getOrNull() as String[]
 		pkg.publicDownloadNumbers = true
 		// pkg.attributes = []
