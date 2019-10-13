@@ -26,3 +26,8 @@
 # Simple-Publish v0.5.0
 
 * Fixed some bintray properties being configured incorrectly. #1
+
+# Simple-Publish v0.6.0
+
++ Added support for the `oss.user` and `oss.password` system properties and the `OSS_USER` and `OSS_PASSWORD` environment variables for configuring maven central sync.
+* Fixed an issue that caused licenses to be configured incorrectly.
